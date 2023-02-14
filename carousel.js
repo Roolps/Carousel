@@ -1,15 +1,7 @@
-const carouselConfig = {
-    "elements": {
-        "wrap-name": "cards-wrap", // ID attribute of the wrapper containing the cards.
-        "card-name": "card" // Classname of the cards inside the wrapper you want to animate
-    },
-    "animations": {
-        "left-pull": "anim-left", // CSS class to apply when the item moves from the center to the left
-        "right-pull": "anim-right" // CSS class to apply when the item moves from the center to the right
-    },
-    "delay": 1000 // The ms time it takes for CSS to complete it's animation - taken from the 'transition' property
-}
-
+// CSS class used by the cards in the carousel
+const cardName = "card";
+// Time taken for cards to complete their animation cycle, same as the transition time in the css.
+const animDelay = 1000;
 
 /*
 Progress prevents you swiping twice simultaneously, it waits
@@ -20,31 +12,32 @@ var progress = false;
 function carousel(method) {
     if (!progress) {
         progress = true;
-        var carouselWrap = document.getElementById(carouselConfig["elements"]["wrap-name"]);
+        // Gets the wrap that contains all of the carousel cards inside
+        var carouselWrap = document.getElementById("cards-wrap");
         if (method == "+") {
-            var toleft = carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[1];
-            var fromright = carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[2];
-            toleft.classList.add(carouselConfig["animations"]["left-pull"]);
-            fromright.classList.remove(carouselConfig["animations"]["right-pull"]);
+            var toleft = carouselWrap.getElementsByClassName(cardName)[1];
+            var fromright = carouselWrap.getElementsByClassName(cardName)[2];
+            toleft.classList.add("anim-left");
+            fromright.classList.remove("anim-right");
             
-            var temp = carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[0];
-            temp.classList.remove(carouselConfig["animations"]["left-pull"]);
-            temp.classList.add(carouselConfig["animations"]["right-pull"]);
+            var temp = carouselWrap.getElementsByClassName(cardName)[0];
+            temp.classList.remove("left-anim");
+            temp.classList.add("right-anim");
 
             setTimeout(() => {
                 carouselWrap.removeChild(temp);
                 carouselWrap.appendChild(temp);
                 progress = false;
-            }, carouselConfig["delay"]);
+            }, animDelay);
         } else {            
-            var toRight = carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[1];
-            var fromLeft = carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[0];
-            toRight.classList.add(carouselConfig["animations"]["right-pull"]);
-            fromLeft.classList.remove(carouselConfig["animations"]["left-pull"]);
+            var toRight = carouselWrap.getElementsByClassName(cardName)[1];
+            var fromLeft = carouselWrap.getElementsByClassName(cardName)[0];
+            toRight.classList.add("right-anim");
+            fromLeft.classList.remove("left-anim");
             
-            var temp =  carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"])[carouselWrap.getElementsByClassName(carouselConfig["elements"]["card-name"]).length - 1];
-            temp.classList.remove(carouselConfig["animations"]["right-pull"]);
-            temp.classList.add(carouselConfig["animations"]["left-pull"]);
+            var temp =  carouselWrap.getElementsByClassName(cardName)[carouselWrap.getElementsByClassName(cardName).length - 1];
+            temp.classList.remove("right-anim");
+            temp.classList.add("left-anim");
 
             setTimeout(() => {
                 carouselWrap.removeChild(temp);
@@ -54,7 +47,7 @@ function carousel(method) {
                 carouselWrap.appendChild(temp);
                 carouselWrap.innerHTML += bulk;
                 progress = false;
-            }, carouselConfig["delay"]);
+            }, animDelay);
         }
     }
 }
