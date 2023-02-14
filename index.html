@@ -1,0 +1,123 @@
+<html>
+<script src="./carousel.js"></script>
+<div class="container">
+    <button class="left" onclick="carousel('-')"></button>
+
+
+    <!--
+    The first card should have your pull left animation already applied (in my case this is class anim-left)
+    The second card should have no animation classes and will be the one sat in the central position
+    Any cards after the second should have the animation to pull right class (in my case this is anim-right)
+-->
+    <div id="cards-wrap">
+        <div class="card anim-left">
+            <p>Card 4</p>
+        </div>
+        <div class="card">
+            <p>Card 1</p>
+        </div>
+        <div class="card anim-right">
+            <p>Card 2</p>
+        </div>
+        <div class="card anim-right">
+            <p>Card 3</p>
+        </div>
+    </div>
+
+
+
+    <button onclick="carousel('+')"></button>
+</div>
+
+</html>
+<style>
+    /*
+Style these two as you wish! I would recommend
+using a row-flex for the container, and giving
+it the same height as your cards, with a slightly
+bigger width to space the buttons in nicely either
+side.
+*/
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 24rem;
+        height: 10rem;
+        justify-content: space-between;
+        position: absolute;
+    }
+    button {
+        position: relative;
+        z-index: 2;
+        padding: .2rem;
+        border-width: 0 .3rem .3rem 0;
+        border-color: #111;
+        background-color: transparent;
+        transform: rotate(-45deg);
+        cursor: pointer;
+    }
+    button.left {
+        transform: rotate(135deg);
+    }
+
+
+
+    /*
+your wrapper MUST have these properties
+this is the ID name that you'll want to
+put into the JS configuration constant.
+*/
+    #cards-wrap {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+
+    /*
+these are the cards you want to flick through
+the styling can be as you want it to be! make
+sure that this represents the center position,
+so any animations you use to swipe off must be
+cleared here.
+*/
+    #cards-wrap .card {
+        position: absolute;
+        width: 18rem;
+        height: 10rem;
+        background-color: #222;
+        border: .3rem #111 solid;
+        border-radius: .5rem;
+        opacity: 1;
+        transition: opacity 1s, transform 1s;
+    }
+    #cards-wrap p{
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+
+
+    /*
+animations to swipe to the left and the right
+*/
+    #cards-wrap .card.anim-left {
+        transform: translateX(-20rem);
+        opacity: 0;
+    }
+
+    #cards-wrap .card.anim-right {
+        transform: translateX(20rem);
+        opacity: 0;
+    }
+</style>
